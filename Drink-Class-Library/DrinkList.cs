@@ -10,6 +10,7 @@ namespace Drink_Class_Library
     {
 
         private List<Drink> drinks;
+        public int total_sales = 0;
 
         public DrinkList()
         {

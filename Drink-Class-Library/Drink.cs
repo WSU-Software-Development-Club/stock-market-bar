@@ -2,24 +2,34 @@
 {
     public class Drink
     {
-        public int ID { get; set; }
         public string name { get; set; }
         public double price;
         private double initial_price;
-        private double percentage_threshold;
-        private double initial_threshold;
+        public int sales_count { get; private set; }
 
-        private int price_level;
+        private int price_level = 0;
+        private int max_level = 4;
+        private int min_level = -4;
 
-        public Drink(int ID, string drink_name, double price)
+
+        public Drink(string drink_name, double price)
         {
-            this.ID = ID;
             this.name = drink_name;
             this.price = price;
             this.initial_price = price;
-            this.percentage_threshold = -1.0;
-            this.initial_threshold = -1.0;
-            this.price_level = 0;
+            this.sales_count = 0;
+
+
+        }
+
+        public void record_drink_sale(int total_sales)
+        {
+            sales_count++;
+            adjust_price(total_sales);
+        }
+
+        private void adjust_price(int total_sales)
+        {
 
         }
 
