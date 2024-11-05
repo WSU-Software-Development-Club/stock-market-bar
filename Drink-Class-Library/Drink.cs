@@ -7,7 +7,7 @@
         private double initial_price;
         public int sales_count { get; private set; }
 
-        private int price_level = 0;
+        public int price_level { get; private set; }
         private int max_level = 4;
         private int min_level = -4;
 
@@ -18,19 +18,13 @@
             this.price = price;
             this.initial_price = price;
             this.sales_count = 0;
-
+            this.price_level = 0;
 
         }
 
         public void record_drink_sale(int total_sales)
         {
             sales_count++;
-            adjust_price(total_sales);
-        }
-
-        private void adjust_price(int total_sales)
-        {
-
         }
 
         public double increase_price()
