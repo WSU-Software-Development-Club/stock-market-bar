@@ -10,8 +10,8 @@ namespace Drink_Class_Library
     {
         static void Main(string[] args)
         {
-            // Initialize the drink list
-            DrinkList drinkList = new DrinkList();
+            // Initialize the drink list with the number of levels as parameter
+            DrinkList drinkList = new DrinkList(9);
 
             // Add some drinks
             drinkList.AddDrink(new Drink("Mojito", 5.00));
