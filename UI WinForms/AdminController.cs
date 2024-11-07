@@ -1,3 +1,5 @@
+using Drink_Class_Library;
+
 namespace UI_WinForms
 {
     public partial class AdminController : Form
@@ -5,6 +7,9 @@ namespace UI_WinForms
         public List<Tuple<string, double>> drinksDemo;
 
         AddDrink instance;
+
+        // Create DrinkClass
+        DrinkController drinkController = new DrinkController();
 
         public AdminController()
         {
@@ -25,6 +30,8 @@ namespace UI_WinForms
             tempList.Add(new Tuple<string, double>("Guiness", 4.55));
 
             return tempList;
+
+            //drinksDemo = drinkController.InitializeDrinkDemoList();
         }
 
         private void btnDrinkDemo_Click(object sender, EventArgs e)

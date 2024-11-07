@@ -1,0 +1,50 @@
+﻿
+This is my (Austin) current overall thought process about the stock price algorithm
+
+Let's start simple, what determines whether the price of a drink goes up or down?
+How many sales that drink has.
+
+How do we know if a drink is popular or not?
+By comparing it's sales with all the other drinks.
+
+My algorithm consists of (for simplistic purposes) 9 different price levels.
+-4, -3, -2, -1, 0, 1, 2, 3, 4
+
+Level 0 = Original price
+Level 1 = Original price + $0.25
+Level 2 = Original price + $0.50
+Level -1 = Original price - $0.25
+
+You get the idea.
+
+Now imagine these price levels as the x-axis of a bell (normal) curve.
+We use a normal curve to ensure that drinks are being compared against the sales of other drinks
+We use the percentage of one drink's sales to determine what price level it should be at
+As soon as a drink passes a threshold of percentage of sales (either up or down), it moves to that price level.
+This ensures most drinks will be on a medium level, while some very popular (or not popular) drinks will be on the far ends of the price level
+
+Exmaple: Vodka soda being compared against 4 other drinks (5 drinks total)
+Vodka soda current sales: 30%
+Drink 2: 25%
+Drink 3: 20%
+Drink 4: 15%
+Drink 5: 10%
+
+The computer will calculate based on these percentages what the standard deviation should be and therefore what price level each of these drinks should be on.
+Based on these sales, vodka soda will occupy a higher price level, say level 3 (OP + $0.75)
+As drinks are sold at varying rates throughout the night, the price level of vodka soda will fluctuate with changing demand.
+
+Precondition: The dataset must be large enough to avoid small number of sales dominating the bell curve
+Potential solution 1: Getting a datset beforehand from the bar to have some data to work with beforehand
+Problem 1: Drinks will already have a large data set so it will be harder for drinks to move up and down
+
+Potential solution 2: Let the algorithm be random until a significant number of data is set to then start implementing the algorithm
+Problem 1: At the time the algorithm begins running, all the stock prices will suddenly change rapidly
+
+Potential solution 3: Instead of drink levels being automatically determined by the spot on the bell curve, let the spot be an indicator that the 
+drink could move up or down in price
+Example: If the drink is on a higher level on the bell curve than is reflected in their actual price, the chance they move up is higher than others
+Problem 1: When do we decide on moving the price levels, since it won't be determined at the time of sale for the drink
+
+Solution 1 seems to be the best chance of solving this issue in my head, we just need to ensure the dataset is medium sized so that 
+drinks can still move but won't be dominated by small movements.
