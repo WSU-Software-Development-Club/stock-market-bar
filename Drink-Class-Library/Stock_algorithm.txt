@@ -1,4 +1,8 @@
 ﻿
+
+THIS IS OUTDATED
+
+
 This is my (Austin) current overall thought process about the stock price algorithm
 
 Let's start simple, what determines whether the price of a drink goes up or down?
