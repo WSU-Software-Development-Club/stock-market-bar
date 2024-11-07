@@ -30,19 +30,20 @@
         {
             mainPanel = new Panel();
             rightPanel = new Panel();
-            btnDemo = new Button();
-            panel1 = new Panel();
-            drinkBox = new ListBox();
             selectedDrinkLabel = new Label();
+            btnDemo = new Button();
+            leftPanel = new Panel();
+            drinkBox = new ListBox();
+            btnCreateDrink = new Button();
             mainPanel.SuspendLayout();
             rightPanel.SuspendLayout();
-            panel1.SuspendLayout();
+            leftPanel.SuspendLayout();
             SuspendLayout();
             // 
             // mainPanel
             // 
             mainPanel.Controls.Add(rightPanel);
-            mainPanel.Controls.Add(panel1);
+            mainPanel.Controls.Add(leftPanel);
             mainPanel.Dock = DockStyle.Fill;
             mainPanel.Location = new Point(0, 0);
             mainPanel.Name = "mainPanel";
@@ -59,37 +60,6 @@
             rightPanel.Size = new Size(1067, 812);
             rightPanel.TabIndex = 1;
             // 
-            // btnDemo
-            // 
-            btnDemo.Dock = DockStyle.Bottom;
-            btnDemo.Location = new Point(0, 719);
-            btnDemo.Name = "btnDemo";
-            btnDemo.Size = new Size(1067, 93);
-            btnDemo.TabIndex = 0;
-            btnDemo.Text = "Demo Loading Drinks";
-            btnDemo.UseVisualStyleBackColor = true;
-            btnDemo.Click += btnDrinkDemo_Click;
-            // 
-            // panel1
-            // 
-            panel1.Controls.Add(drinkBox);
-            panel1.Dock = DockStyle.Left;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(345, 812);
-            panel1.TabIndex = 0;
-            // 
-            // drinkBox
-            // 
-            drinkBox.Dock = DockStyle.Fill;
-            drinkBox.FormattingEnabled = true;
-            drinkBox.ItemHeight = 25;
-            drinkBox.Location = new Point(0, 0);
-            drinkBox.Name = "drinkBox";
-            drinkBox.Size = new Size(345, 812);
-            drinkBox.TabIndex = 0;
-            drinkBox.SelectedIndexChanged += drinkBox_SelectedIndexChanged;
-            // 
             // selectedDrinkLabel
             // 
             selectedDrinkLabel.Dock = DockStyle.Top;
@@ -99,6 +69,49 @@
             selectedDrinkLabel.Size = new Size(1067, 46);
             selectedDrinkLabel.TabIndex = 1;
             selectedDrinkLabel.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // btnDemo
+            // 
+            btnDemo.Dock = DockStyle.Bottom;
+            btnDemo.Location = new Point(0, 726);
+            btnDemo.Name = "btnDemo";
+            btnDemo.Size = new Size(1067, 86);
+            btnDemo.TabIndex = 0;
+            btnDemo.Text = "Demo Loading Drinks";
+            btnDemo.UseVisualStyleBackColor = true;
+            btnDemo.Click += btnDrinkDemo_Click;
+            // 
+            // leftPanel
+            // 
+            leftPanel.Controls.Add(btnCreateDrink);
+            leftPanel.Controls.Add(drinkBox);
+            leftPanel.Dock = DockStyle.Left;
+            leftPanel.Location = new Point(0, 0);
+            leftPanel.Name = "leftPanel";
+            leftPanel.Size = new Size(345, 812);
+            leftPanel.TabIndex = 0;
+            // 
+            // drinkBox
+            // 
+            drinkBox.Dock = DockStyle.Top;
+            drinkBox.FormattingEnabled = true;
+            drinkBox.ItemHeight = 25;
+            drinkBox.Location = new Point(0, 0);
+            drinkBox.Name = "drinkBox";
+            drinkBox.Size = new Size(345, 729);
+            drinkBox.TabIndex = 0;
+            drinkBox.SelectedIndexChanged += drinkBox_SelectedIndexChanged;
+            // 
+            // btnCreateDrink
+            // 
+            btnCreateDrink.Dock = DockStyle.Fill;
+            btnCreateDrink.Location = new Point(0, 729);
+            btnCreateDrink.Name = "btnCreateDrink";
+            btnCreateDrink.Size = new Size(345, 83);
+            btnCreateDrink.TabIndex = 1;
+            btnCreateDrink.Text = "Create New Drink";
+            btnCreateDrink.UseVisualStyleBackColor = true;
+            btnCreateDrink.Click += btnCreateDrink_Click;
             // 
             // AdminController
             // 
@@ -110,7 +123,7 @@
             Text = "Admin Controller";
             mainPanel.ResumeLayout(false);
             rightPanel.ResumeLayout(false);
-            panel1.ResumeLayout(false);
+            leftPanel.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -119,8 +132,9 @@
         private Panel mainPanel;
         private Panel rightPanel;
         private Button btnDemo;
-        private Panel panel1;
+        private Panel leftPanel;
         private ListBox drinkBox;
         private Label selectedDrinkLabel;
+        private Button btnCreateDrink;
     }
 }

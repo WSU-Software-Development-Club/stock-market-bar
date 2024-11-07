@@ -2,13 +2,17 @@ namespace UI_WinForms
 {
     public partial class AdminController : Form
     {
-        private List<Tuple<string, double>> drinksDemo;
+        public List<Tuple<string, double>> drinksDemo;
+
+        AddDrink instance;
 
         public AdminController()
         {
             InitializeComponent();
 
             drinksDemo = InitializeDrinkDemoList();
+
+            instance = new AddDrink(this);
         }
 
         private List<Tuple<string, double>> InitializeDrinkDemoList()
@@ -35,8 +39,13 @@ namespace UI_WinForms
         private void drinkBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             int drink = drinkBox.SelectedIndex;
-            
+
             selectedDrinkLabel.Text = drinksDemo[drink].Item1;
+        }
+
+        private void btnCreateDrink_Click(object sender, EventArgs e)
+        {
+            instance.Show();
         }
     }
 }
