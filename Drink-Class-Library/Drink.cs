@@ -3,13 +3,15 @@
     public class Drink
     {
         public string name { get; set; }
-        public double price;
+        public double price { get; private set; }
         private double initial_price;
         public int sales_count { get; private set; }
 
         public int price_level { get; private set; }
         private int max_level = 4;
         private int min_level = -4;
+
+        public double PriceIncreaseAmount{get; private set;} = 0.25;
 
 
         public Drink(string drink_name, double price)
@@ -27,21 +29,27 @@
             sales_count++;
         }
 
-        public double increase_price()
+        public void increase_price()
         {
-            this.price_level++;
-            this.price += .25;
-
-            return this.price;
+            if(price_level < max_level){
+                this.price_level++;
+                this.price += PriceIncreaseAmount;
+            }
 
         }
 
-        public double decrease_price()
+        public void decrease_price()
         {
-            this.price_level--;
-            this.price -= .25;
+            if(price_level > min_level){
+                this.price_level--;
+                this.price -= PriceIncreaseAmount;
+            }
+        }
 
-            return this.price;
+         // Display drink details for debugging
+        public override string ToString()
+        {
+            return $"{Name} - Price: {CurrentPrice:C2}, Sales: {SalesCount}, Level: {PriceLevel}";
         }
     }
 }

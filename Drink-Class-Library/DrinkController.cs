@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace Drink_Class_Library
 {
@@ -13,15 +14,48 @@ namespace Drink_Class_Library
         private double[] level_probabilities;
         // Maps iterator to price level
         private int[] levels;
+
+        // Timer
+        private Timer marketCrashTimer;
+
         // Basic constructor - needs adjusted
         public DrinkController(int num_of_levels) 
         { 
             Console.WriteLine("Project Linked");
+            total_sales = 0;
+
             // Initialize drink_list with number of levels that the drink can move between
             drink_list = new List<Drink>();
             drink_list = InitializeDrinkList();
             levels = create_levels(num_of_levels);
             level_probabilities = create_usable_percentages(num_of_levels);
+
+            InitializeMarketCrashTimer();
+        }
+
+        private void InitializeMarketCrashTimer(){
+            marketCrashTimer = new Timer(60*60*1000); // 1 hour (ms)
+            marketCrashTimer.Elapsed += onMarketCrash;
+            marketCrashTimer.AutoReset = true;
+            marketCrashTimer.Enabled = true;
+        }
+
+        // Market crash event: reduces all prices by a random amount
+        private void OnMarketCrash(object source, ElapsedEventArgs e)
+        {
+            Console.WriteLine("Market crash event triggered.");
+            ApplyMarketCrash(-0.25, -1.00); // Drop prices by amount between -0.25 and -1.00
+        }
+
+        private void ApplyMarketCrash(double minDrop, double maxDrop)
+        {
+            Random rand = new Random();
+            foreach (var drink in drink_list)
+            {
+                double priceReduction = minDrop + (rand.NextDouble() * (maxDrop - minDrop));
+                drink.adjust_price(priceReduction);
+            }
+            Console.WriteLine("Market crash applied. All prices reduced.");
         }
 
         // Early version of initialize drink list
@@ -82,14 +116,7 @@ namespace Drink_Class_Library
         // Finds drink by name
         public Drink? find_drink_by_name(string name)
         {
-            for (int i = 0; i < drink_list.Count(); i++)
-            {
-                if (drink_list[i].name == name)
-                {
-                    return drink_list[i];
-                }
-            }
-            return null;
+            return drink_list.FirstOrDefault(d => d.name == name);
         }
 
         // This code will run everytime the drink is bought
@@ -111,52 +138,29 @@ namespace Drink_Class_Library
 
         }
 
-        // This function will calcaute a popularity score by comparing it to total sales and seeing if it should move up or down
-        private void check_for_level_change(Drink drink)
+        // Adjust drink's price level based on popularity
+        private void AdjustPriceLevel(Drink drink)
         {
-            // Calculate popularity score using target scores
-            double target_sales = (double)total_sales / this.drink_list.Count();
+            double target_sales = (double)total_sales / drink_list.Count;
             double popularity_score = (double)drink.sales_count / target_sales;
+            double probability_score = Math.Clamp(popularity_score / 2, 0.0, 0.9);
 
-            // Calculate probability score which is a score from 0 to 1 to show how popular the drink is
-            double probability_score = popularity_score / 2;
-
-            if (probability_score > 0.9)
+            for (int i = level_probabilities.Length - 1; i >= 0; i--)
             {
-                probability_score = .9;
-            }
-            else if (probability_score < 0.0)
-            {
-                probability_score = 0.0;
-            }
-            Console.WriteLine(probability_score);
-
-            // Very important function
-            // [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
-            // [-4, -3, -2, -1, 0, 1, 2, 3, 4]
-            // Compares the previously calculated probability score and compares it to level_probabilities to determine what level it should be at
-            for (int i = level_probabilities.Count() - 1; i >= 0; i--)
-            {
-                // If this is true, we have found the level it should be at
                 if (level_probabilities[i] <= probability_score)
                 {
-                    // If the found level is higher than the current level
                     if (levels[i] > drink.price_level)
                     {
-                        drink.increase_price();     // Increase by 1
+                        drink.increase_price();
                     }
-                    // If the found level is lower than the current level
                     else if (levels[i] < drink.price_level)
                     {
-                        drink.decrease_price();     // Decrease by 1
+                        drink.decrease_price();
                     }
-                    // Else, no changes
                     return;
                 }
             }
-            return;
         }
-
 
     }
 }
