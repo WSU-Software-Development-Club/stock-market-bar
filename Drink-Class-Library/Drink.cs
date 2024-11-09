@@ -46,6 +46,11 @@
             }
         }
 
+        // Adjust price by specific amount without going below initial price
+        public void adjust_price(double adjustmentAmount){
+            price = Math.Max(initial_price, price + adjustmentAmount);
+        }
+
          // Display drink details for debugging
         public override string ToString()
         {
