@@ -1,0 +1,10 @@
+J:\Khoa_folder\wsu SDC\graphDisplay\graphDisplay\bin\Debug\WindowsFormsApp1.exe.config
+J:\Khoa_folder\wsu SDC\graphDisplay\graphDisplay\bin\Debug\WindowsFormsApp1.exe
+J:\Khoa_folder\wsu SDC\graphDisplay\graphDisplay\bin\Debug\WindowsFormsApp1.pdb
+J:\Khoa_folder\wsu SDC\graphDisplay\graphDisplay\obj\Debug\graphDisplay.csproj.AssemblyReference.cache
+J:\Khoa_folder\wsu SDC\graphDisplay\graphDisplay\obj\Debug\WindowsFormsApp1.Form1.resources
+J:\Khoa_folder\wsu SDC\graphDisplay\graphDisplay\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+J:\Khoa_folder\wsu SDC\graphDisplay\graphDisplay\obj\Debug\graphDisplay.csproj.GenerateResource.cache
+J:\Khoa_folder\wsu SDC\graphDisplay\graphDisplay\obj\Debug\graphDisplay.csproj.CoreCompileInputs.cache
+J:\Khoa_folder\wsu SDC\graphDisplay\graphDisplay\obj\Debug\WindowsFormsApp1.exe
+J:\Khoa_folder\wsu SDC\graphDisplay\graphDisplay\obj\Debug\WindowsFormsApp1.pdb
