@@ -1,4 +1,5 @@
 using Drink_Class_Library;
+using System.Diagnostics;
 
 namespace UI_WinForms
 {
@@ -6,33 +7,22 @@ namespace UI_WinForms
     {
         public List<Tuple<string, double>> drinksDemo;
 
-        AddDrink instance;
+        public AddDrink admin_add_drink;
+        public PriceVariation price_variation_instance;
 
         // Create DrinkClass
-        DrinkController drinkController = new DrinkController();
+        public DrinkController drinkController;
+        public int levels = 9;
 
         public AdminController()
         {
             InitializeComponent();
 
-            drinksDemo = InitializeDrinkDemoList();
-
-            instance = new AddDrink(this);
+            admin_add_drink = new AddDrink(this);
+            price_variation_instance = new PriceVariation(this);
+            drinkController = new DrinkController(levels);
         }
 
-        private List<Tuple<string, double>> InitializeDrinkDemoList()
-        {
-            List<Tuple<string, double>> tempList = new List<Tuple<string, double>>();
-            tempList.Add(new Tuple<string, double>("Bud Lite", 3.45));
-            tempList.Add(new Tuple<string, double>("Corona Extra", 4.25));
-            tempList.Add(new Tuple<string, double>("Pabst Blue Ribbon", 3.75));
-            tempList.Add(new Tuple<string, double>("Coors Lite", 2.85));
-            tempList.Add(new Tuple<string, double>("Guiness", 4.55));
-
-            return tempList;
-
-            //drinksDemo = drinkController.InitializeDrinkDemoList();
-        }
 
         private void btnDrinkDemo_Click(object sender, EventArgs e)
         {
@@ -52,7 +42,36 @@ namespace UI_WinForms
 
         private void btnCreateDrink_Click(object sender, EventArgs e)
         {
-            instance.Show();
+            admin_add_drink.Show();
+        }
+
+        private void rightPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            price_variation_instance.Show();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private double levels_to_variation(int levels)
+        {
+            double variation = 0;
+            double levels_to_price = (levels - 1) / 2;
+            // Levels will include negative and positive ints - why the need for * 2
+            variation = levels_to_price * .25;
+            return variation;
+        }
+
+        public void changeVariationDisplay()
+        {
+            PriceVariationBox.Text = "Current Price Variation: $" + levels_to_variation(levels).ToString("F2");
         }
     }
 }

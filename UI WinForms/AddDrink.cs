@@ -12,23 +12,28 @@ namespace UI_WinForms
 {
     public partial class AddDrink : Form
     {
-        AdminController instance;
+        AdminController admin_controller_instance;
 
         public AddDrink(AdminController adminController)
         {
             InitializeComponent();
 
-            instance = adminController;
+            admin_controller_instance = adminController;
         }
 
         private void btnAddDrink_Click(object sender, EventArgs e)
         {
-            instance.drinksDemo.Add(new Tuple<string, double>(drinkNameBox.Text, Convert.ToDouble(drinkPriceBox.Text)));
+            admin_controller_instance.drinksDemo.Add(new Tuple<string, double>(drinkNameBox.Text, Convert.ToDouble(drinkPriceBox.Text)));
 
             drinkNameBox.Clear();
             drinkPriceBox.Clear();
-            
+
             this.Hide();
+        }
+
+        private void mainPanel_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

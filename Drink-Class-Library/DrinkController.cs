@@ -37,6 +37,12 @@ namespace Drink_Class_Library
             return newDrinkList;
         }
 
+        public void set_levels(int new_levels)
+        {
+            levels = create_levels(new_levels);
+            level_probabilities = create_usable_percentages(new_levels);
+        }
+
         // Precondition: num_of_levels must be odd and positive
         private int[] create_levels(int num_of_levels)
         {
