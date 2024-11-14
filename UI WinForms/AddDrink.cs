@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Drink_Class_Library;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -23,12 +24,20 @@ namespace UI_WinForms
 
         private void btnAddDrink_Click(object sender, EventArgs e)
         {
-            admin_controller_instance.drinksDemo.Add(new Tuple<string, double>(drinkNameBox.Text, Convert.ToDouble(drinkPriceBox.Text)));
+            // Price must be a valid double to continue
+            if (double.TryParse(drinkPriceBox.Text, out double price)) {
 
-            drinkNameBox.Clear();
-            drinkPriceBox.Clear();
+                // Initialize drink with name and price
+                string drink_name = drinkNameBox.Text;
+                Drink new_drink = new Drink(drink_name, price);
+                admin_controller_instance.drinkController.drink_list.Add(new_drink);
 
-            this.Hide();
+                // Clear out textboxes
+                drinkNameBox.Clear();
+                drinkPriceBox.Clear();
+                // Go back to admin page
+                this.Hide();
+            }
         }
 
         private void mainPanel_Paint(object sender, PaintEventArgs e)

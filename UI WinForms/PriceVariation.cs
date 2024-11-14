@@ -56,6 +56,7 @@ namespace UI_WinForms
                 Console.WriteLine(new_levels);
                 adminController.levels = new_levels;
                 adminController.changeVariationDisplay();
+                adminController.change_price_variation();
                 this.Hide();
             }
             else

@@ -7,6 +7,9 @@
     <Compile Update="AddDrink.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="ChangePrice.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="PriceVariation.cs">
       <SubType>Form</SubType>
     </Compile>

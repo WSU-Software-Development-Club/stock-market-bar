@@ -30,6 +30,9 @@
         {
             mainPanel = new Panel();
             rightPanel = new Panel();
+            change_price_button = new Button();
+            delete_drink_button = new Button();
+            admin_price_set_button = new Button();
             PriceVariationBox = new TextBox();
             price_variation_button = new Button();
             selectedDrinkLabel = new Label();
@@ -55,6 +58,9 @@
             // 
             // rightPanel
             // 
+            rightPanel.Controls.Add(change_price_button);
+            rightPanel.Controls.Add(delete_drink_button);
+            rightPanel.Controls.Add(admin_price_set_button);
             rightPanel.Controls.Add(PriceVariationBox);
             rightPanel.Controls.Add(price_variation_button);
             rightPanel.Controls.Add(selectedDrinkLabel);
@@ -67,6 +73,36 @@
             rightPanel.TabIndex = 1;
             rightPanel.Paint += rightPanel_Paint;
             // 
+            // change_price_button
+            // 
+            change_price_button.Location = new Point(353, 85);
+            change_price_button.Name = "change_price_button";
+            change_price_button.Size = new Size(127, 56);
+            change_price_button.TabIndex = 5;
+            change_price_button.Text = "Set Original Price";
+            change_price_button.UseVisualStyleBackColor = true;
+            change_price_button.Click += change_price_button_Click;
+            // 
+            // delete_drink_button
+            // 
+            delete_drink_button.Location = new Point(25, 85);
+            delete_drink_button.Name = "delete_drink_button";
+            delete_drink_button.Size = new Size(149, 56);
+            delete_drink_button.TabIndex = 4;
+            delete_drink_button.Text = "Delete Drink";
+            delete_drink_button.UseVisualStyleBackColor = true;
+            delete_drink_button.Click += delete_drink_button_click;
+            // 
+            // admin_price_set_button
+            // 
+            admin_price_set_button.Location = new Point(191, 85);
+            admin_price_set_button.Name = "admin_price_set_button";
+            admin_price_set_button.Size = new Size(145, 56);
+            admin_price_set_button.TabIndex = 3;
+            admin_price_set_button.Text = "Do Not Change Price";
+            admin_price_set_button.UseVisualStyleBackColor = true;
+            admin_price_set_button.Click += price_set_click;
+            // 
             // PriceVariationBox
             // 
             PriceVariationBox.Font = new Font("Segoe UI", 11F);
@@ -74,7 +110,6 @@
             PriceVariationBox.Name = "PriceVariationBox";
             PriceVariationBox.Size = new Size(298, 32);
             PriceVariationBox.TabIndex = 2;
-            PriceVariationBox.Text = "Current Price Variation: $" + levels_to_variation(levels).ToString("F2");
             PriceVariationBox.TextChanged += textBox1_TextChanged;
             // 
             // price_variation_button
@@ -170,5 +205,8 @@
         private Button btnCreateDrink;
         private Button price_variation_button;
         private TextBox PriceVariationBox;
+        private Button admin_price_set_button;
+        private Button delete_drink_button;
+        private Button change_price_button;
     }
 }
