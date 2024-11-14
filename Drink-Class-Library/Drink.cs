@@ -5,7 +5,7 @@
         public string name { get; set; }
 
         public double price;
-        public double initial_price;
+        private double initial_price;
         public int sales_count { get; private set; }
 
         public int price_level { get; private set; }
@@ -23,9 +23,14 @@
 
         }
 
+        public void set_initial_price(double new_price)
+        {
+            this.initial_price = new_price;
+        }
+
         public string getNameAndPrice()
         {
-            return this.name + ", $" + this.price.ToString("F2");
+            return this.name + ", $" + this.initial_price.ToString("F2");
         }
 
         public string getMenuOptions(int levels)
@@ -33,13 +38,13 @@
             if (varies)
             {
                 double half_levels = (levels - 1) / 2;
-                double max_price = this.price + (half_levels * .25);
-                double min_price = this.price - (half_levels * .25);
+                double max_price = this.initial_price + (half_levels * .25);
+                double min_price = this.initial_price - (half_levels * .25);
                 return this.name + "; Max Price: $" + max_price.ToString("F2") + ", Min Price: $" + min_price.ToString("F2");
             }
             else
             {
-                return this.name + "; Permanent Price: $" + this.price.ToString("F2");
+                return this.name + "; Permanent Price: $" + this.initial_price.ToString("F2");
             }
         }
 

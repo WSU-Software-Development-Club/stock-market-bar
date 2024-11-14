@@ -40,6 +40,7 @@
             leftPanel = new Panel();
             btnCreateDrink = new Button();
             drinkBox = new ListBox();
+            open_simulation_button = new Button();
             mainPanel.SuspendLayout();
             rightPanel.SuspendLayout();
             leftPanel.SuspendLayout();
@@ -58,6 +59,7 @@
             // 
             // rightPanel
             // 
+            rightPanel.Controls.Add(open_simulation_button);
             rightPanel.Controls.Add(change_price_button);
             rightPanel.Controls.Add(delete_drink_button);
             rightPanel.Controls.Add(admin_price_set_button);
@@ -71,7 +73,6 @@
             rightPanel.Name = "rightPanel";
             rightPanel.Size = new Size(854, 650);
             rightPanel.TabIndex = 1;
-            rightPanel.Paint += rightPanel_Paint;
             // 
             // change_price_button
             // 
@@ -110,7 +111,6 @@
             PriceVariationBox.Name = "PriceVariationBox";
             PriceVariationBox.Size = new Size(298, 32);
             PriceVariationBox.TabIndex = 2;
-            PriceVariationBox.TextChanged += textBox1_TextChanged;
             // 
             // price_variation_button
             // 
@@ -120,7 +120,7 @@
             price_variation_button.TabIndex = 1;
             price_variation_button.Text = "Set Price Variation";
             price_variation_button.UseVisualStyleBackColor = true;
-            price_variation_button.Click += button1_Click;
+            price_variation_button.Click += overall_price_variation_button_click;
             // 
             // selectedDrinkLabel
             // 
@@ -158,10 +158,10 @@
             // btnCreateDrink
             // 
             btnCreateDrink.Dock = DockStyle.Fill;
-            btnCreateDrink.Location = new Point(0, 584);
+            btnCreateDrink.Location = new Point(0, 579);
             btnCreateDrink.Margin = new Padding(2);
             btnCreateDrink.Name = "btnCreateDrink";
-            btnCreateDrink.Size = new Size(276, 66);
+            btnCreateDrink.Size = new Size(276, 71);
             btnCreateDrink.TabIndex = 1;
             btnCreateDrink.Text = "Create New Drink";
             btnCreateDrink.UseVisualStyleBackColor = true;
@@ -170,13 +170,25 @@
             // drinkBox
             // 
             drinkBox.Dock = DockStyle.Top;
+            drinkBox.Font = new Font("Segoe UI", 11F);
             drinkBox.FormattingEnabled = true;
+            drinkBox.ItemHeight = 25;
             drinkBox.Location = new Point(0, 0);
             drinkBox.Margin = new Padding(2);
             drinkBox.Name = "drinkBox";
-            drinkBox.Size = new Size(276, 584);
+            drinkBox.Size = new Size(276, 579);
             drinkBox.TabIndex = 0;
             drinkBox.SelectedIndexChanged += drinkBox_SelectedIndexChanged;
+            // 
+            // open_simulation_button
+            // 
+            open_simulation_button.Location = new Point(38, 505);
+            open_simulation_button.Name = "open_simulation_button";
+            open_simulation_button.Size = new Size(351, 71);
+            open_simulation_button.TabIndex = 6;
+            open_simulation_button.Text = "Open Simulation";
+            open_simulation_button.UseVisualStyleBackColor = true;
+            open_simulation_button.Click += open_simulation_button_Click;
             // 
             // AdminController
             // 
@@ -208,5 +220,6 @@
         private Button admin_price_set_button;
         private Button delete_drink_button;
         private Button change_price_button;
+        private Button open_simulation_button;
     }
 }

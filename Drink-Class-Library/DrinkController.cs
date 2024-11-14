@@ -106,12 +106,17 @@ namespace Drink_Class_Library
             // Record the sale within Drink class
             drink.record_drink_sale(total_sales);
 
-            // Check if the drink level needs to be updated
-            for (int i = 0; i < drink_list.Count(); i++)
-            {
-                check_for_level_change(drink_list[i]);
+            // Let the data set 
+            if (total_sales > 20) { 
+                // Check if the drink level needs to be updated
+                for (int i = 0; i < drink_list.Count(); i++)
+                {
+                    if (drink_list[i].varies)
+                    {
+                        check_for_level_change(drink_list[i]);
+                    }
+                }
             }
-
 
             return;
 

@@ -6,23 +6,27 @@ namespace UI_WinForms
 {
     public partial class AdminController : Form
     {
-
+        // Create Form Instances
         public AddDrink add_drink_instance;
         public PriceVariation price_variation_instance;
         public ChangePrice change_price_instance;
+        public Drink_Simulation drink_simulation_instance;
 
         // Create DrinkClass
         public DrinkController drinkController;
         public int levels = 9;
 
+        // Constructor
         public AdminController()
         {
+            // Form Load
             InitializeComponent();
 
             // Initialize screen instances
             add_drink_instance = new AddDrink(this);
             price_variation_instance = new PriceVariation(this);
             change_price_instance = new ChangePrice(this);
+            drink_simulation_instance = new Drink_Simulation(this);
 
             // Initialize drink controller
             drinkController = new DrinkController(levels);
@@ -34,13 +38,93 @@ namespace UI_WinForms
             change_price_button.Hide();
         }
 
-
+        // Load Drinks
         private void btnDrinkDemo_Click(object sender, EventArgs e)
         {
-            change_drink_list();
+            update_drink_list();
         }
 
-        private void change_drink_list()
+        // If user wants to add a drink
+        private void btnCreateDrink_Click(object sender, EventArgs e)
+        {
+            add_drink_instance.Show();
+        }
+
+        // If user wants to change how much drinks can change price
+        private void overall_price_variation_button_click(object sender, EventArgs e)
+        {
+            price_variation_instance.Show();
+        }
+
+        // If user wants a drink to "vary" or "not vary"
+        private void price_set_click(object sender, EventArgs e)
+        {
+            // Get drink index
+            int drink = drinkBox.SelectedIndex;
+
+            // Error checking
+            if (drink > 0)
+            {
+                // Change variation of Drink object
+                drinkController.drink_list[drink].changeVariation();
+                // Update admin text
+                selectedDrinkLabel.Text = drinkController.drink_list[drink].getMenuOptions(levels);
+                // Update price change button
+                update_price_change_button(drink);
+            }
+        }
+
+        // If user wants to delete a drink
+        private void delete_drink_button_click(object sender, EventArgs e)
+        {
+            int drink = drinkBox.SelectedIndex;
+
+            drinkController.drink_list.RemoveAt(drink);
+
+            update_drink_list();
+        }
+
+        // If user wants to change the listed price of a drink
+        private void change_price_button_Click(object sender, EventArgs e)
+        {
+            int drink = drinkBox.SelectedIndex;
+
+            change_price_instance.load_form(drink);
+        }
+
+        // If admin selects a drink on the left hand panel
+        private void drinkBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Show drink editing buttons
+            admin_price_set_button.Show();
+            delete_drink_button.Show();
+            change_price_button.Show();
+
+            // Get drink index
+            int drink = drinkBox.SelectedIndex;
+            // Display Drink properties
+            selectedDrinkLabel.Text = drinkController.drink_list[drink].getMenuOptions(levels);
+            // Update price change button
+            update_price_change_button(drink);
+        }
+
+        // If a drink is set to "not varies" or "varies"
+        public void change_price_variation()
+        {
+            int drink = drinkBox.SelectedIndex;
+            selectedDrinkLabel.Text = drinkController.drink_list[drink].getMenuOptions(levels);
+        }
+
+        // If user wants to change price of single drink
+        public void change_price(int drink_index, double new_price)
+        {
+            this.drinkController.drink_list[drink_index].set_initial_price(new_price);
+            update_drink_list();
+            selectedDrinkLabel.Text = drinkController.drink_list[drink_index].getMenuOptions(levels);
+        }
+
+        // If 1/multiple drink properties change, update it
+        private void update_drink_list()
         {
             drinkBox.Items.Clear();
             foreach (Drink drink in drinkController.drink_list)
@@ -49,30 +133,13 @@ namespace UI_WinForms
             }
         }
 
-        private void drinkBox_SelectedIndexChanged(object sender, EventArgs e)
+        // If price variation changes
+        public void changeVariationDisplay()
         {
-            admin_price_set_button.Show();
-            delete_drink_button.Show();
-            change_price_button.Show();
-            int drink = drinkBox.SelectedIndex;
-
-            selectedDrinkLabel.Text = drinkController.drink_list[drink].getMenuOptions(levels);
-            update_price_change_button(drink);
+            PriceVariationBox.Text = "Current Price Variation: $" + levels_to_variation(levels).ToString("F2");
         }
 
-        public void change_price_variation()
-        {
-            int drink = drinkBox.SelectedIndex;
-            selectedDrinkLabel.Text = drinkController.drink_list[drink].getMenuOptions(levels);
-        }
-
-        public void change_price(int drink_index, double new_price)
-        {
-            this.drinkController.drink_list[drink_index].initial_price = new_price;
-            change_drink_list();
-        }
-
-
+        // If current drink is set to "not varies" or "varies", display different text
         private void update_price_change_button(int drink_index)
         {
             if (drinkController.drink_list[drink_index].varies)
@@ -85,26 +152,7 @@ namespace UI_WinForms
             }
         }
 
-        private void btnCreateDrink_Click(object sender, EventArgs e)
-        {
-            add_drink_instance.Show();
-        }
-
-        private void rightPanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            price_variation_instance.Show();
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
+        // Convert levels to a double price (ex. 9 -> 1.00)
         private double levels_to_variation(int levels)
         {
             double variation = 0;
@@ -114,34 +162,9 @@ namespace UI_WinForms
             return variation;
         }
 
-        public void changeVariationDisplay()
+        private void open_simulation_button_Click(object sender, EventArgs e)
         {
-            PriceVariationBox.Text = "Current Price Variation: $" + levels_to_variation(levels).ToString("F2");
-        }
 
-        private void price_set_click(object sender, EventArgs e)
-        {
-            int drink = drinkBox.SelectedIndex;
-
-            drinkController.drink_list[drink].changeVariation();
-            selectedDrinkLabel.Text = drinkController.drink_list[drink].getMenuOptions(levels);
-            update_price_change_button(drink);
-        }
-
-        private void delete_drink_button_click(object sender, EventArgs e)
-        {
-            int drink = drinkBox.SelectedIndex;
-
-            drinkController.drink_list.RemoveAt(drink);
-
-            change_drink_list();
-        }
-
-        private void change_price_button_Click(object sender, EventArgs e)
-        {
-            int drink = drinkBox.SelectedIndex;
-
-            change_price_instance.load_form(drink);
         }
     }
 }
