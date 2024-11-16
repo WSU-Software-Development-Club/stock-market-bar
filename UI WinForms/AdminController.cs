@@ -81,17 +81,23 @@ namespace UI_WinForms
         {
             int drink = drinkBox.SelectedIndex;
 
-            drinkController.drink_list.RemoveAt(drink);
+            // Error checking
+            if (drink >= 0) {
+                drinkController.drink_list.RemoveAt(drink);
 
-            update_drink_list();
+                update_drink_list();
+            }
+            
         }
 
         // If user wants to change the listed price of a drink
         private void change_price_button_Click(object sender, EventArgs e)
         {
             int drink = drinkBox.SelectedIndex;
-
-            change_price_instance.load_form(drink);
+            if (drink >= 0)
+            {
+                change_price_instance.load_form(drink);
+            }
         }
 
         // If admin selects a drink on the left hand panel
@@ -104,17 +110,26 @@ namespace UI_WinForms
 
             // Get drink index
             int drink = drinkBox.SelectedIndex;
-            // Display Drink properties
-            selectedDrinkLabel.Text = drinkController.drink_list[drink].getMenuOptions(levels);
-            // Update price change button
-            update_price_change_button(drink);
+            // Error checking
+            if (drink >= 0)
+            {
+                // Display Drink properties
+                selectedDrinkLabel.Text = drinkController.drink_list[drink].getMenuOptions(levels);
+                // Update price change button
+                update_price_change_button(drink);
+            }
+           
         }
 
         // If a drink is set to "not varies" or "varies"
         public void change_price_variation()
         {
             int drink = drinkBox.SelectedIndex;
-            selectedDrinkLabel.Text = drinkController.drink_list[drink].getMenuOptions(levels);
+            // Error checking
+            if (drink >= 0)
+            {
+                selectedDrinkLabel.Text = drinkController.drink_list[drink].getMenuOptions(levels);
+            }
         }
 
         // If user wants to change price of single drink
