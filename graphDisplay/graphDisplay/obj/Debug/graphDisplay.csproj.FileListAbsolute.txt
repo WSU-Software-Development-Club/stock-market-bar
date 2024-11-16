@@ -8,3 +8,13 @@ J:\Khoa_folder\wsu SDC\graphDisplay\graphDisplay\obj\Debug\graphDisplay.csproj.G
 J:\Khoa_folder\wsu SDC\graphDisplay\graphDisplay\obj\Debug\graphDisplay.csproj.CoreCompileInputs.cache
 J:\Khoa_folder\wsu SDC\graphDisplay\graphDisplay\obj\Debug\WindowsFormsApp1.exe
 J:\Khoa_folder\wsu SDC\graphDisplay\graphDisplay\obj\Debug\WindowsFormsApp1.pdb
+C:\Users\atarr\source\repos\stock-market-bar-1\graphDisplay\graphDisplay\bin\Debug\WindowsFormsApp1.exe.config
+C:\Users\atarr\source\repos\stock-market-bar-1\graphDisplay\graphDisplay\bin\Debug\WindowsFormsApp1.exe
+C:\Users\atarr\source\repos\stock-market-bar-1\graphDisplay\graphDisplay\bin\Debug\WindowsFormsApp1.pdb
+C:\Users\atarr\source\repos\stock-market-bar-1\graphDisplay\graphDisplay\obj\Debug\graphDisplay.csproj.AssemblyReference.cache
+C:\Users\atarr\source\repos\stock-market-bar-1\graphDisplay\graphDisplay\obj\Debug\WindowsFormsApp1.Form1.resources
+C:\Users\atarr\source\repos\stock-market-bar-1\graphDisplay\graphDisplay\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+C:\Users\atarr\source\repos\stock-market-bar-1\graphDisplay\graphDisplay\obj\Debug\graphDisplay.csproj.GenerateResource.cache
+C:\Users\atarr\source\repos\stock-market-bar-1\graphDisplay\graphDisplay\obj\Debug\graphDisplay.csproj.CoreCompileInputs.cache
+C:\Users\atarr\source\repos\stock-market-bar-1\graphDisplay\graphDisplay\obj\Debug\WindowsFormsApp1.exe
+C:\Users\atarr\source\repos\stock-market-bar-1\graphDisplay\graphDisplay\obj\Debug\WindowsFormsApp1.pdb

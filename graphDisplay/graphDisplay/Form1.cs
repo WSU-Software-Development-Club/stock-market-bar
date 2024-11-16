@@ -144,5 +144,9 @@ namespace WindowsFormsApp1
             }
         }
 
+        private void priceGraph_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
