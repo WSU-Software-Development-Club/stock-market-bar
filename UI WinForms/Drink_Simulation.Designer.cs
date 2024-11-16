@@ -33,12 +33,16 @@
             admin_start_button = new Button();
             admin_textbox = new TextBox();
             normal_tab = new TabPage();
+            normal_start_button = new Button();
             normal_textbox = new TextBox();
             lock_tab = new TabPage();
+            locked_start_button = new Button();
             locked_textbox = new TextBox();
             unbalanced_tab = new TabPage();
+            unbalanced_start_button = new Button();
             unbalanced_textbox = new TextBox();
             large_tab = new TabPage();
+            large_start_button = new Button();
             large_textbox = new TextBox();
             tabControl1.SuspendLayout();
             admin_tab.SuspendLayout();
@@ -78,7 +82,7 @@
             // 
             admin_start_button.Location = new Point(415, 6);
             admin_start_button.Name = "admin_start_button";
-            admin_start_button.Size = new Size(169, 36);
+            admin_start_button.Size = new Size(169, 67);
             admin_start_button.TabIndex = 1;
             admin_start_button.Text = "Start Simulation";
             admin_start_button.UseVisualStyleBackColor = true;
@@ -95,6 +99,7 @@
             // 
             // normal_tab
             // 
+            normal_tab.Controls.Add(normal_start_button);
             normal_tab.Controls.Add(normal_textbox);
             normal_tab.Font = new Font("Segoe UI", 11F);
             normal_tab.Location = new Point(4, 29);
@@ -104,6 +109,16 @@
             normal_tab.TabIndex = 1;
             normal_tab.Text = "Normal";
             normal_tab.UseVisualStyleBackColor = true;
+            // 
+            // normal_start_button
+            // 
+            normal_start_button.Location = new Point(415, 15);
+            normal_start_button.Name = "normal_start_button";
+            normal_start_button.Size = new Size(169, 67);
+            normal_start_button.TabIndex = 2;
+            normal_start_button.Text = "Start Simulation";
+            normal_start_button.UseVisualStyleBackColor = true;
+            normal_start_button.Click += normal_start_button_Click;
             // 
             // normal_textbox
             // 
@@ -116,6 +131,7 @@
             // 
             // lock_tab
             // 
+            lock_tab.Controls.Add(locked_start_button);
             lock_tab.Controls.Add(locked_textbox);
             lock_tab.Font = new Font("Segoe UI", 11F);
             lock_tab.Location = new Point(4, 29);
@@ -124,6 +140,16 @@
             lock_tab.TabIndex = 2;
             lock_tab.Text = "Lock";
             lock_tab.UseVisualStyleBackColor = true;
+            // 
+            // locked_start_button
+            // 
+            locked_start_button.Location = new Point(415, 14);
+            locked_start_button.Name = "locked_start_button";
+            locked_start_button.Size = new Size(169, 72);
+            locked_start_button.TabIndex = 2;
+            locked_start_button.Text = "Start Simulation";
+            locked_start_button.UseVisualStyleBackColor = true;
+            locked_start_button.Click += locked_start_button_Click;
             // 
             // locked_textbox
             // 
@@ -136,6 +162,7 @@
             // 
             // unbalanced_tab
             // 
+            unbalanced_tab.Controls.Add(unbalanced_start_button);
             unbalanced_tab.Controls.Add(unbalanced_textbox);
             unbalanced_tab.Font = new Font("Segoe UI", 11F);
             unbalanced_tab.Location = new Point(4, 29);
@@ -144,6 +171,16 @@
             unbalanced_tab.TabIndex = 3;
             unbalanced_tab.Text = "Unbalanced";
             unbalanced_tab.UseVisualStyleBackColor = true;
+            // 
+            // unbalanced_start_button
+            // 
+            unbalanced_start_button.Location = new Point(415, 12);
+            unbalanced_start_button.Name = "unbalanced_start_button";
+            unbalanced_start_button.Size = new Size(169, 68);
+            unbalanced_start_button.TabIndex = 2;
+            unbalanced_start_button.Text = "Start Simulation";
+            unbalanced_start_button.UseVisualStyleBackColor = true;
+            unbalanced_start_button.Click += unbalanced_start_button_Click;
             // 
             // unbalanced_textbox
             // 
@@ -156,6 +193,7 @@
             // 
             // large_tab
             // 
+            large_tab.Controls.Add(large_start_button);
             large_tab.Controls.Add(large_textbox);
             large_tab.Font = new Font("Segoe UI", 11F);
             large_tab.Location = new Point(4, 29);
@@ -164,6 +202,16 @@
             large_tab.TabIndex = 4;
             large_tab.Text = "Large";
             large_tab.UseVisualStyleBackColor = true;
+            // 
+            // large_start_button
+            // 
+            large_start_button.Location = new Point(415, 9);
+            large_start_button.Name = "large_start_button";
+            large_start_button.Size = new Size(169, 62);
+            large_start_button.TabIndex = 2;
+            large_start_button.Text = "Start Simulation";
+            large_start_button.UseVisualStyleBackColor = true;
+            large_start_button.Click += large_start_button_Click;
             // 
             // large_textbox
             // 
@@ -210,5 +258,9 @@
         private TextBox unbalanced_textbox;
         private TextBox large_textbox;
         private Button admin_start_button;
+        private Button normal_start_button;
+        private Button locked_start_button;
+        private Button unbalanced_start_button;
+        private Button large_start_button;
     }
 }

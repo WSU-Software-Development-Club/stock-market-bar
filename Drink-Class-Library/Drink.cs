@@ -5,7 +5,7 @@
         public string name { get; set; }
 
         public double price;
-        private double initial_price;
+        public double initial_price;
         public int sales_count { get; private set; }
 
         public int price_level { get; private set; }
@@ -23,6 +23,7 @@
 
         }
 
+        
         public void set_initial_price(double new_price)
         {
             this.initial_price = new_price;

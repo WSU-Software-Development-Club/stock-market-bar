@@ -24,6 +24,74 @@ namespace Drink_Class_Library
             level_probabilities = create_usable_percentages(num_of_levels);
         }
 
+        public List<Drink> InitializeTenDrinkList(List<(string, double)> drinksWithPrices)
+        {
+            // Final Drink List
+            List<Drink> balancedDrinkList = new List<Drink>();
+            Random rand = new Random();
+
+            // Define Hashset to keep uniqueness
+            HashSet<int> selectedIndices = new HashSet<int>();
+
+            // Need 10 drinks
+            while (balancedDrinkList.Count < 10)
+            {
+                // Get random number
+                int randomNumber = rand.Next(0, drinksWithPrices.Count);
+                // Check for uniqueness
+                if (!selectedIndices.Contains(randomNumber))
+                {
+                    // Add randomnumber to hashset
+                    selectedIndices.Add(randomNumber);
+
+                    // Define drink properties
+                    string drink_name = drinksWithPrices[randomNumber].Item1;
+                    double drink_price = drinksWithPrices[randomNumber].Item2;
+                    // Define new Drink
+                    Drink newDrink = new Drink(drink_name, drink_price);
+
+                    // Add to list
+                    balancedDrinkList.Add(newDrink);
+                }
+            }
+            return balancedDrinkList;
+            
+        }
+
+        public List<Drink> InitializeThirtyDrinkList(List<(string, double)> drinksWithPrices)
+        {
+            // Final Drink List
+            List<Drink> balancedDrinkList = new List<Drink>();
+            Random rand = new Random();
+
+            // Define Hashset to keep uniqueness
+            HashSet<int> selectedIndices = new HashSet<int>();
+
+            // Need 30 drinks
+            while (balancedDrinkList.Count < 30)
+            {
+                // Get random number
+                int randomNumber = rand.Next(0, drinksWithPrices.Count);
+                // Check for uniqueness
+                if (!selectedIndices.Contains(randomNumber))
+                {
+                    // Add randomnumber to hashset
+                    selectedIndices.Add(randomNumber);
+
+                    // Define drink properties
+                    string drink_name = drinksWithPrices[randomNumber].Item1;
+                    double drink_price = drinksWithPrices[randomNumber].Item2;
+                    // Define new Drink
+                    Drink newDrink = new Drink(drink_name, drink_price);
+
+                    // Add to list
+                    balancedDrinkList.Add(newDrink);
+                }
+            }
+            return balancedDrinkList;
+
+        }
+
         // Early version of initialize drink list
         public List<Drink> InitializeDrinkList()
         {

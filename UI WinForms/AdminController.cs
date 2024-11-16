@@ -6,14 +6,16 @@ namespace UI_WinForms
 {
     public partial class AdminController : Form
     {
+
+        // Create DrinkClass
+        public DrinkController drinkController;
+
         // Create Form Instances
         public AddDrink add_drink_instance;
         public PriceVariation price_variation_instance;
         public ChangePrice change_price_instance;
         public Drink_Simulation drink_simulation_instance;
 
-        // Create DrinkClass
-        public DrinkController drinkController;
         public int levels = 9;
 
         // Constructor
@@ -26,7 +28,7 @@ namespace UI_WinForms
             add_drink_instance = new AddDrink(this);
             price_variation_instance = new PriceVariation(this);
             change_price_instance = new ChangePrice(this);
-            drink_simulation_instance = new Drink_Simulation(this);
+            
 
             // Initialize drink controller
             drinkController = new DrinkController(levels);
@@ -63,7 +65,7 @@ namespace UI_WinForms
             int drink = drinkBox.SelectedIndex;
 
             // Error checking
-            if (drink > 0)
+            if (drink >= 0)
             {
                 // Change variation of Drink object
                 drinkController.drink_list[drink].changeVariation();
@@ -164,7 +166,8 @@ namespace UI_WinForms
 
         private void open_simulation_button_Click(object sender, EventArgs e)
         {
-
+            drink_simulation_instance = new Drink_Simulation(this);
+            drink_simulation_instance.Show();
         }
     }
 }
