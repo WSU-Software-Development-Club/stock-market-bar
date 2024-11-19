@@ -105,6 +105,16 @@ namespace Drink_Class_Library
             return newDrinkList;
         }
 
+        // Returns the name and price of each drink in the list
+        public List<(string, string)> returnDrinkList()
+        {
+            List<(string, string)> returned_drinks = new List<(string, string)> ();
+            foreach (Drink drink in this.drink_list) {
+                returned_drinks.Add((drink.name, drink.price.ToString("F2")));
+            }
+            return returned_drinks;
+        }
+
         public void set_levels(int new_levels)
         {
             levels = create_levels(new_levels);
