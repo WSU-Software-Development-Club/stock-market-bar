@@ -71,7 +71,7 @@
         {
             this.price_level++;
             this.price += .25;
-
+            
             return this.price;
 
         }
@@ -80,6 +80,10 @@
         {
             this.price_level--;
             this.price -= .25;
+            if (this.price < 0)
+            {
+                this.price = 0;
+            }
 
             return this.price;
         }
