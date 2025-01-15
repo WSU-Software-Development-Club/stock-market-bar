@@ -6,10 +6,12 @@
 
         public double price;
         public double initial_price;
-        public int sales_count { get; private set; }
+        public int sales_count { get; set; }
 
         public int price_level { get; private set; }
         public bool varies;
+
+        public int previousWeight;
 
 
         public Drink(string drink_name, double price)
@@ -20,7 +22,7 @@
             this.sales_count = 0;
             this.price_level = 0;
             this.varies = true;
-
+            this.previousWeight = 0;
         }
 
         
@@ -62,11 +64,6 @@
             return;
         }
 
-        public void record_drink_sale(int total_sales)
-        {
-            sales_count++;
-        }
-
         public double increase_price()
         {
             this.price_level++;
@@ -87,5 +84,7 @@
 
             return this.price;
         }
+
+        
     }
 }

@@ -10,7 +10,7 @@
     <Compile Update="ChangePrice.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Drink_Simulation.cs">
+    <Compile Update="DrinkSimulation.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="PriceVariation.cs">

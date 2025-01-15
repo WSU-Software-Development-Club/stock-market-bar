@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Drink_Class_Library;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -26,7 +27,15 @@ namespace UI_WinForms
         {
             this.Show();
             this.drink_index = drink_index;
-            drink_info.Text = "Drink: " + adminController.drinkController.drink_list[drink_index].getNameAndPrice();
+            Drink? selected_drink = adminController.drinkController.drinkRepository.GetDrinkByIndex(drink_index);
+            if (selected_drink != null)
+            {
+                drink_info.Text = "Drink: " + selected_drink.getNameAndPrice();
+            }
+            else
+            {
+                Console.WriteLine("Unexepected Error occured.");
+            }
         }
 
         private void ChangePrice_Load(object sender, EventArgs e)

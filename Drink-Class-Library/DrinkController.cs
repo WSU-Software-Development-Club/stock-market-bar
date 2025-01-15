@@ -9,243 +9,120 @@ namespace Drink_Class_Library
     public class DrinkController
     {
         public int total_sales;
-        public List<Drink> drink_list;
-        private double[] level_probabilities;
-        // Maps iterator to price level
-        private int[] levels;
+        private SalesService _salesService;
+        public DrinkRepository drinkRepository;
+
+        // List of 50 random names and associated price
+        private List<(string, double)> drinksWithPrices = new List<(string, double)>
+        {
+            ("Mojito", 8.50),
+            ("Cosmopolitan", 10.00),
+            ("Margarita", 9.25),
+            ("Old Fashioned", 11.00),
+            ("Pina Colada", 8.75),
+            ("Martini", 12.00),
+            ("Daiquiri", 9.00),
+            ("Mai Tai", 10.50),
+            ("Manhattan", 11.50),
+            ("Whiskey Sour", 9.75),
+            ("Bloody Mary", 8.00),
+            ("Negroni", 10.75),
+            ("Gin and Tonic", 7.50),
+            ("Rum Punch", 9.50),
+            ("Tequila Sunrise", 8.25),
+            ("Long Island Iced Tea", 11.25),
+            ("Moscow Mule", 9.00),
+            ("Sangria", 8.50),
+            ("Blue Lagoon", 10.00),
+            ("Irish Coffee", 8.75),
+            ("Amaretto Sour", 9.25),
+            ("Caipirinha", 10.00),
+            ("Bellini", 8.00),
+            ("Aperol Spritz", 9.75),
+            ("French 75", 10.50),
+            ("Paloma", 8.50),
+            ("Tom Collins", 9.25),
+            ("White Russian", 10.25),
+            ("Black Russian", 9.00),
+            ("Sidecar", 10.75),
+            ("Hurricane", 11.00),
+            ("Mint Julep", 8.75),
+            ("Pisco Sour", 9.50),
+            ("Zombie", 11.50),
+            ("Gin Fizz", 9.25),
+            ("Cuba Libre", 8.00),
+            ("Sazerac", 12.00),
+            ("Espresso Martini", 10.75),
+            ("Vesper", 11.25),
+            ("Bee's Knees", 9.50),
+            ("Bourbon Smash", 10.00),
+            ("Clover Club", 8.75),
+            ("Dark and Stormy", 9.75),
+            ("Gin Rickey", 7.75),
+            ("Vodka Collins", 8.25),
+            ("Planter's Punch", 9.50),
+            ("Bramble", 10.00),
+            ("Highball", 8.50),
+            ("Rum Swizzle", 9.00),
+            ("Southside", 10.25),
+            ("Shirley Temple", 6.50)
+        };
+
         // Basic constructor - needs adjusted
-        public DrinkController(int num_of_levels) 
-        { 
+        public DrinkController() 
+        {
             Console.WriteLine("Project Linked");
-            // Initialize drink_list with number of levels that the drink can move between
-            drink_list = new List<Drink>();
-            drink_list = InitializeDrinkList();
-            levels = create_levels(num_of_levels);
-            level_probabilities = create_usable_percentages(num_of_levels);
+
+            total_sales = 250;
+
+            drinkRepository = new DrinkRepository();
+            // For Development Purposes only
+            InitializeNewDrinkList(10);
+            // Remove for deliverable
+            _salesService = new SalesService(drinkRepository);
         }
 
-        public List<Drink> InitializeTenDrinkList(List<(string, double)> drinksWithPrices)
+        public void drink_bought(string drink_name)
         {
-            // Final Drink List
-            List<Drink> balancedDrinkList = new List<Drink>();
-            Random rand = new Random();
-
-            // Define Hashset to keep uniqueness
-            HashSet<int> selectedIndices = new HashSet<int>();
-
-            // Need 10 drinks
-            while (balancedDrinkList.Count < 10)
-            {
-                // Get random number
-                int randomNumber = rand.Next(0, drinksWithPrices.Count);
-                // Check for uniqueness
-                if (!selectedIndices.Contains(randomNumber))
-                {
-                    // Add randomnumber to hashset
-                    selectedIndices.Add(randomNumber);
-
-                    // Define drink properties
-                    string drink_name = drinksWithPrices[randomNumber].Item1;
-                    double drink_price = drinksWithPrices[randomNumber].Item2;
-                    // Define new Drink
-                    Drink newDrink = new Drink(drink_name, drink_price);
-
-                    // Add to list
-                    balancedDrinkList.Add(newDrink);
-                }
-            }
-            return balancedDrinkList;
-            
-        }
-
-        public List<Drink> InitializeThirtyDrinkList(List<(string, double)> drinksWithPrices)
-        {
-            // Final Drink List
-            List<Drink> balancedDrinkList = new List<Drink>();
-            Random rand = new Random();
-
-            // Define Hashset to keep uniqueness
-            HashSet<int> selectedIndices = new HashSet<int>();
-
-            // Need 30 drinks
-            while (balancedDrinkList.Count < 30)
-            {
-                // Get random number
-                int randomNumber = rand.Next(0, drinksWithPrices.Count);
-                // Check for uniqueness
-                if (!selectedIndices.Contains(randomNumber))
-                {
-                    // Add randomnumber to hashset
-                    selectedIndices.Add(randomNumber);
-
-                    // Define drink properties
-                    string drink_name = drinksWithPrices[randomNumber].Item1;
-                    double drink_price = drinksWithPrices[randomNumber].Item2;
-                    // Define new Drink
-                    Drink newDrink = new Drink(drink_name, drink_price);
-
-                    // Add to list
-                    balancedDrinkList.Add(newDrink);
-                }
-            }
-            return balancedDrinkList;
-
-        }
-
-        // Early version of initialize drink list
-        public List<Drink> InitializeDrinkList()
-        {
-            List<Drink> newDrinkList = new List<Drink>();
-            newDrinkList.Add(new Drink("Mojito", 5.00));
-            newDrinkList.Add(new Drink("Martini", 7.50));
-            newDrinkList.Add(new Drink("Old Fashioned", 8.00));
-            newDrinkList.Add(new Drink("Vodka Soda", 6.00));
-            newDrinkList.Add(new Drink("Moscow Mule", 6.00));
-
-            return newDrinkList;
-        }
-
-        // Returns the name and price of each drink in the list
-        public List<(string, string)> returnDrinkList()
-        {
-            List<(string, string)> returned_drinks = new List<(string, string)> ();
-            foreach (Drink drink in this.drink_list) {
-                returned_drinks.Add((drink.name, drink.price.ToString("F2")));
-            }
-            return returned_drinks;
-        }
-
-        public void set_levels(int new_levels)
-        {
-            levels = create_levels(new_levels);
-            level_probabilities = create_usable_percentages(new_levels);
-        }
-
-        // Precondition: num_of_levels must be odd and positive
-        private int[] create_levels(int num_of_levels)
-        {
-            int[] levels = new int[num_of_levels];
-            int mid_point = num_of_levels / 2;
-
-            for (int i = -mid_point; i <= mid_point; i++)
-            {
-                levels[i + mid_point] = i;
-            }
-
-            return levels;
-        }
-
-        // This function will make it easier for the admin to control what percentage of drinks occupy each level
-        private double[] create_usable_percentages(int num_of_levels)
-        {
-
-            double[] level_probs = new double[num_of_levels];
-            double level_percentage = (100 / (double)levels.Length) / 100;
-            double total = 0;
-            for (int i = 0; i < levels.Count(); i++)
-            {
-                Console.WriteLine(i + ": " + total);
-                level_probs[i] = total;
-                total += level_percentage;
-            }
-            return level_probs;
-        }
-
-        // Change drink price
-        public void ChangeDrinkPrice(string drink_name, double price)
-        {
-            for (int i = 0; i < drink_list.Count; i++)
-            {
-                if (drink_list[i].name == drink_name)
-                {
-                    drink_list[i].price = price;
-                }
-            }
-        }
-
-        // Finds drink by name
-        public Drink? find_drink_by_name(string name)
-        {
-            for (int i = 0; i < drink_list.Count(); i++)
-            {
-                if (drink_list[i].name == name)
-                {
-                    return drink_list[i];
-                }
-            }
-            return null;
-        }
-
-        // This code will run everytime the drink is bought
-        public void drink_bought(Drink drink)
-        {
-            // Increase total drink sales
             total_sales++;
-            // Record the sale within Drink class
-            drink.record_drink_sale(total_sales);
-
-            // Let the data set 
-            if (total_sales > 20) { 
-                // Check if the drink level needs to be updated
-                for (int i = 0; i < drink_list.Count(); i++)
-                {
-                    if (drink_list[i].varies)
-                    {
-                        check_for_level_change(drink_list[i]);
-                    }
-                }
-            }
-
-            return;
-
+            _salesService.drink_bought(drink_name, total_sales);
         }
 
-        // This function will calcaute a popularity score by comparing it to total sales and seeing if it should move up or down
-        private void check_for_level_change(Drink drink)
+        public void InitializeNewDrinkList(int count)
         {
-            // Calculate popularity score using target scores
-            double target_sales = (double)total_sales / this.drink_list.Count();
-            double popularity_score = (double)drink.sales_count / target_sales;
-
-            // Calculate probability score which is a score from 0 to 1 to show how popular the drink is
-            double probability_score = popularity_score / 2;
-
-            if (probability_score > 0.9)
-            {
-                probability_score = .9;
-            }
-            else if (probability_score < 0.0)
-            {
-                probability_score = 0.0;
-            }
-            Console.WriteLine(probability_score);
-
-            // Very important function
-            // [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
-            // [-4, -3, -2, -1, 0, 1, 2, 3, 4]
-            // Compares the previously calculated probability score and compares it to level_probabilities to determine what level it should be at
-            for (int i = level_probabilities.Count() - 1; i >= 0; i--)
-            {
-                // If this is true, we have found the level it should be at
-                if (level_probabilities[i] <= probability_score)
-                {
-                    // If the found level is higher than the current level
-                    if (levels[i] > drink.price_level)
-                    {
-                        drink.increase_price();     // Increase by 1
-                    }
-                    // If the found level is lower than the current level
-                    else if (levels[i] < drink.price_level)
-                    {
-                        drink.decrease_price();     // Decrease by 1
-                    }
-                    // Else, no changes
-                    return;
-                }
-            }
-            return;
+            drinkRepository.GenerateDrinkList(count);
         }
 
+
+        public void AddDrink(string name, double price)
+        {
+            var drink = new Drink(name, price);
+            drinkRepository.AddDrink(drink);
+        }
+
+        public void RemoveDrink(string name)
+        {
+            var drink = drinkRepository.GetDrinkByName(name);
+            if (drink != null)
+            {
+                drinkRepository.RemoveDrink(drink);
+            }
+        }
+
+        public void UpdateDrinkPrice(string name, double newPrice)
+        {
+            drinkRepository.UpdateDrinkPrice(name, newPrice);
+        }
+
+        public List<Drink> GetAllDrinks()
+        {
+            return drinkRepository.GetAllDrinks();
+        }    
+
+        public List<(string, string)> returnDrinkNamesAndPrices()
+        {
+            return drinkRepository.returnDrinkListText();
+        }
 
     }
 }

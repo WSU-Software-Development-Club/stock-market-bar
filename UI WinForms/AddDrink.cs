@@ -30,7 +30,7 @@ namespace UI_WinForms
                 // Initialize drink with name and price
                 string drink_name = drinkNameBox.Text;
                 Drink new_drink = new Drink(drink_name, price);
-                admin_controller_instance.drinkController.drink_list.Add(new_drink);
+                admin_controller_instance.drinkController.drinkRepository.AddDrink(new_drink);
 
                 // Clear out textboxes
                 drinkNameBox.Clear();

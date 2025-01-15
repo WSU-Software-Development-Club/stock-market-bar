@@ -6,15 +6,15 @@ namespace UI_WinForms
 {
     public partial class AdminController : Form
     {
-
+        
         // Create DrinkClass
         public DrinkController drinkController;
 
         // Create Form Instances
+        public DrinkSimulation? drink_simulation_instance;
         public AddDrink add_drink_instance;
         public PriceVariation price_variation_instance;
         public ChangePrice change_price_instance;
-        public Drink_Simulation drink_simulation_instance;
 
         public int levels = 9;
 
@@ -28,10 +28,11 @@ namespace UI_WinForms
             add_drink_instance = new AddDrink(this);
             price_variation_instance = new PriceVariation(this);
             change_price_instance = new ChangePrice(this);
+
             
 
             // Initialize drink controller
-            drinkController = new DrinkController(levels);
+            drinkController = new DrinkController();
 
             // Various Properties
             PriceVariationBox.Text = "Current Price Variation: $" + this.levels_to_variation(levels).ToString("F2");
@@ -67,12 +68,19 @@ namespace UI_WinForms
             // Error checking
             if (drink >= 0)
             {
+                Drink? selected_drink = drinkController.drinkRepository.GetDrinkByIndex(drink);
                 // Change variation of Drink object
-                drinkController.drink_list[drink].changeVariation();
-                // Update admin text
-                selectedDrinkLabel.Text = drinkController.drink_list[drink].getMenuOptions(levels);
-                // Update price change button
-                update_price_change_button(drink);
+                if (selected_drink != null)
+                {
+                    // Change variation variable for selected drink
+                    drinkController.drinkRepository.ChangeVariation(selected_drink);
+                    // Update admin text for selected drink
+                    selectedDrinkLabel.Text = selected_drink.getMenuOptions(this.levels);
+                    // Update price change button
+                    update_price_change_button(drink);
+                }
+                
+                
             }
         }
 
@@ -80,10 +88,11 @@ namespace UI_WinForms
         private void delete_drink_button_click(object sender, EventArgs e)
         {
             int drink = drinkBox.SelectedIndex;
-
+            
             // Error checking
             if (drink >= 0) {
-                drinkController.drink_list.RemoveAt(drink);
+
+                drinkController.drinkRepository.RemoveDrinkAtIndex(drink);
 
                 update_drink_list();
             }
@@ -113,10 +122,16 @@ namespace UI_WinForms
             // Error checking
             if (drink >= 0)
             {
+                Drink? selected_drink = drinkController.drinkRepository.GetDrinkByIndex(drink);
                 // Display Drink properties
-                selectedDrinkLabel.Text = drinkController.drink_list[drink].getMenuOptions(levels);
-                // Update price change button
-                update_price_change_button(drink);
+                if (selected_drink != null)
+                {
+                    // Update drink label text for selected drink
+                    selectedDrinkLabel.Text = selected_drink.getMenuOptions(this.levels);
+                    // Update price change button
+                    update_price_change_button(drink);
+                }
+                                
             }
            
         }
@@ -128,27 +143,49 @@ namespace UI_WinForms
             // Error checking
             if (drink >= 0)
             {
-                selectedDrinkLabel.Text = drinkController.drink_list[drink].getMenuOptions(levels);
+                Drink? selected_drink = drinkController.drinkRepository.GetDrinkByIndex(drink);
+                if (selected_drink != null)
+                {
+                    selectedDrinkLabel.Text = selected_drink.getMenuOptions(this.levels);
+                }
+                else
+                {
+                    Console.WriteLine("Unexpected Error occured finding drink");
+                }
             }
         }
 
         // If user wants to change price of single drink
         public void change_price(int drink_index, double new_price)
         {
-            this.drinkController.drink_list[drink_index].set_initial_price(new_price);
-            update_drink_list();
-            selectedDrinkLabel.Text = drinkController.drink_list[drink_index].getMenuOptions(levels);
+            Drink? selected_drink = this.drinkController.drinkRepository.GetDrinkByIndex(drink_index);
+            if (selected_drink != null)
+            {
+                selected_drink.set_initial_price(new_price);
+                update_drink_list();
+                selectedDrinkLabel.Text = selected_drink.getMenuOptions(this.levels);
+            }
+            
         }
 
         // If 1/multiple drink properties change, update it
         private void update_drink_list()
         {
             drinkBox.Items.Clear();
-            foreach (Drink drink in drinkController.drink_list)
+            if (drinkController.drinkRepository.GetAllDrinks().Count > 0)
             {
-                drinkBox.Items.Add(drink.getNameAndPrice());
+                foreach (Drink drink in drinkController.drinkRepository.GetAllDrinks())
+                {
+                    drinkBox.Items.Add(drink.getNameAndPrice());
+                }
+            }
+            else
+            {
+                drinkController.InitializeNewDrinkList(10);
             }
         }
+
+      
 
         // If price variation changes
         public void changeVariationDisplay()
@@ -159,7 +196,8 @@ namespace UI_WinForms
         // If current drink is set to "not varies" or "varies", display different text
         private void update_price_change_button(int drink_index)
         {
-            if (drinkController.drink_list[drink_index].varies)
+            Drink? selected_drink = drinkController.drinkRepository.GetDrinkByIndex(drink_index);
+            if (selected_drink != null && selected_drink.varies)
             {
                 admin_price_set_button.Text = "Do not change price";
             }
@@ -181,7 +219,7 @@ namespace UI_WinForms
 
         private void open_simulation_button_Click(object sender, EventArgs e)
         {
-            drink_simulation_instance = new Drink_Simulation(this);
+            drink_simulation_instance = new DrinkSimulation(this);
             drink_simulation_instance.Show();
         }
     }
