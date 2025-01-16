@@ -46,7 +46,7 @@
             mainPanel.Controls.Add(drinkNameBox);
             mainPanel.Dock = DockStyle.Fill;
             mainPanel.Location = new Point(0, 0);
-            mainPanel.Margin = new Padding(2, 2, 2, 2);
+            mainPanel.Margin = new Padding(2);
             mainPanel.Name = "mainPanel";
             mainPanel.Size = new Size(640, 360);
             mainPanel.TabIndex = 0;
@@ -76,9 +76,9 @@
             // 
             btnAddDrink.Anchor = AnchorStyles.None;
             btnAddDrink.Location = new Point(220, 251);
-            btnAddDrink.Margin = new Padding(2, 2, 2, 2);
+            btnAddDrink.Margin = new Padding(2);
             btnAddDrink.Name = "btnAddDrink";
-            btnAddDrink.Size = new Size(193, 27);
+            btnAddDrink.Size = new Size(193, 50);
             btnAddDrink.TabIndex = 2;
             btnAddDrink.Text = "Add Drink";
             btnAddDrink.UseVisualStyleBackColor = true;
@@ -88,7 +88,7 @@
             // 
             drinkPriceBox.Anchor = AnchorStyles.None;
             drinkPriceBox.Location = new Point(220, 170);
-            drinkPriceBox.Margin = new Padding(2, 2, 2, 2);
+            drinkPriceBox.Margin = new Padding(2);
             drinkPriceBox.Name = "drinkPriceBox";
             drinkPriceBox.Size = new Size(194, 27);
             drinkPriceBox.TabIndex = 1;
@@ -97,7 +97,7 @@
             // 
             drinkNameBox.Anchor = AnchorStyles.None;
             drinkNameBox.Location = new Point(220, 91);
-            drinkNameBox.Margin = new Padding(2, 2, 2, 2);
+            drinkNameBox.Margin = new Padding(2);
             drinkNameBox.Name = "drinkNameBox";
             drinkNameBox.Size = new Size(194, 27);
             drinkNameBox.TabIndex = 0;
@@ -108,7 +108,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(640, 360);
             Controls.Add(mainPanel);
-            Margin = new Padding(2, 2, 2, 2);
+            Margin = new Padding(2);
             Name = "AddDrink";
             Text = "Add a new drink";
             mainPanel.ResumeLayout(false);

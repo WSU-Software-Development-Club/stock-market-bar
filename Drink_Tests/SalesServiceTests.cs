@@ -78,7 +78,7 @@ namespace Drink_Tests
             _salesService.drink_bought("Margarita", 1);
 
             // Assert
-            Assert.AreEqual(-1.00, _salesService.GetAverageSaleDifferentitation);  // Difference: 10.25 - 9.25
+            Assert.AreEqual(-1.00, _salesService.GetAverageSaleDifferentitation);  // Difference: 9.25 - 10.25
             Assert.AreEqual(9.25, _salesService.GetTotalSalesAmount);  // Total sales updated
         }
 

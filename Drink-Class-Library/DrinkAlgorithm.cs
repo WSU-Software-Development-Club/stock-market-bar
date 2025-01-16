@@ -105,7 +105,26 @@ namespace Drink_Class_Library
                 percentMoved = min_movement + (max_movement - min_movement) * rand.NextDouble();
             }
 
-            drink.price += (percentMoved / 100);
+
+            // Check to make sure drink varies
+            if (drink.varies)
+            {
+                drink.price += (percentMoved / 100);
+            }
+            // Set max limits to a dollar each way
+            if (1.0 < drink.initial_price - drink.price)
+            {
+                drink.price = drink.initial_price - 1;
+            }
+            else if (-1.0 > drink.initial_price - drink.price)
+            {
+                drink.price = drink.initial_price + 1;
+            }
+            // Price can't go negative
+            if (drink.price < 0)
+            {
+                drink.price = 0;
+            }
         }
     }
 }

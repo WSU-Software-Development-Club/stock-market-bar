@@ -6,7 +6,10 @@ namespace UI_WinForms
 {
     public partial class AdminController : Form
     {
-        
+
+        public delegate void DrinksUpdatedEventHandler();  // Define delegate type for the event
+        public event DrinksUpdatedEventHandler DrinksUpdated;  // Define the event
+
         // Create DrinkClass
         public DrinkController drinkController;
 
@@ -29,22 +32,38 @@ namespace UI_WinForms
             price_variation_instance = new PriceVariation(this);
             change_price_instance = new ChangePrice(this);
 
-            
-
             // Initialize drink controller
             drinkController = new DrinkController();
 
             // Various Properties
-            PriceVariationBox.Text = "Current Price Variation: $" + this.levels_to_variation(levels).ToString("F2");
             admin_price_set_button.Hide();
             delete_drink_button.Hide();
             change_price_button.Hide();
+
+            // Initialize events
+            DrinksUpdated += RefreshDrinkList;
+        }
+
+        public void OnDrinkAdded()
+        {
+            // Trigger the DrinksUpdated event, if there are any subscribers
+            DrinksUpdated?.Invoke();
         }
 
         // Load Drinks
         private void btnDrinkDemo_Click(object sender, EventArgs e)
         {
             update_drink_list();
+        }
+
+        private void RefreshDrinkList()
+        {
+            // Logic to update the drink list (e.g., refresh ListBox or GridView)
+            drinkBox.Items.Clear();
+            foreach (var drink in drinkController.drinkRepository.GetAllDrinks())
+            {
+                drinkBox.Items.Add($"{drink.name} - ${drink.initial_price:F2}");
+            }
         }
 
         // If user wants to add a drink
@@ -185,36 +204,18 @@ namespace UI_WinForms
             }
         }
 
-      
-
-        // If price variation changes
-        public void changeVariationDisplay()
-        {
-            PriceVariationBox.Text = "Current Price Variation: $" + levels_to_variation(levels).ToString("F2");
-        }
-
         // If current drink is set to "not varies" or "varies", display different text
         private void update_price_change_button(int drink_index)
         {
             Drink? selected_drink = drinkController.drinkRepository.GetDrinkByIndex(drink_index);
             if (selected_drink != null && selected_drink.varies)
             {
-                admin_price_set_button.Text = "Do not change price";
+                admin_price_set_button.Text = "Freeze price";
             }
             else
             {
-                admin_price_set_button.Text = "Allow price to change";
+                admin_price_set_button.Text = "Unfreeze Price";
             }
-        }
-
-        // Convert levels to a double price (ex. 9 -> 1.00)
-        private double levels_to_variation(int levels)
-        {
-            double variation = 0;
-            double levels_to_price = (levels - 1) / 2;
-            // Levels will include negative and positive ints - why the need for / 2
-            variation = levels_to_price * .25;
-            return variation;
         }
 
         private void open_simulation_button_Click(object sender, EventArgs e)

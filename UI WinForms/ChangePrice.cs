@@ -45,7 +45,8 @@ namespace UI_WinForms
 
         private void save_button_Click(object sender, EventArgs e)
         {
-            if (double.TryParse(change_price_box.Text, out double new_price))
+            // Check if it is a valid double and non-negative
+            if (double.TryParse(change_price_box.Text, out double new_price) && new_price > 0)
             {
                 adminController.change_price(this.drink_index, new_price);
             }

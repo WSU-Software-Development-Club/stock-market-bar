@@ -20,17 +20,23 @@ namespace UI_WinForms
             InitializeComponent();
 
             admin_controller_instance = adminController;
+
+            
         }
 
         private void btnAddDrink_Click(object sender, EventArgs e)
         {
             // Price must be a valid double to continue
-            if (double.TryParse(drinkPriceBox.Text, out double price)) {
+            if (double.TryParse(drinkPriceBox.Text, out double price) && price > 0 &&
+                !string.IsNullOrWhiteSpace(drinkNameBox.Text)) {
 
                 // Initialize drink with name and price
                 string drink_name = drinkNameBox.Text;
                 Drink new_drink = new Drink(drink_name, price);
                 admin_controller_instance.drinkController.drinkRepository.AddDrink(new_drink);
+
+                // Notifies the admincontroller to update drink list
+                admin_controller_instance.OnDrinkAdded();  // This will notify subscribers
 
                 // Clear out textboxes
                 drinkNameBox.Clear();
