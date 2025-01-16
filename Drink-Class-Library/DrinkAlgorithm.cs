@@ -33,7 +33,7 @@ namespace Drink_Class_Library
                 // This weight will end up (-100, 100)
                 // The weight determines whether the price will move up, down or neither
                 // Once the weight is caluclated in this function, it will be checked against it's previous weight (10s ago) to determine the change it needs to make as well as the degree of change
-                int final_weight = 0;
+                double final_weight = 0;
 
                 // Short term change
                 /* Current Values
@@ -42,24 +42,27 @@ namespace Drink_Class_Library
                  */
 
                 // Find number of sales in short term
+                
                 int shortTermSales = _shortTermDrinkQueue.Count(d => d.name == drink.name);
-                int shortTermWeight = -10 * shortTermCount;
+                double shortTermWeight = -10 * shortTermCount;
                 for (int i = 0; i < shortTermSales; i++)
                 {
                     shortTermWeight += 10;
                 }
+                
 
                 // Long term change
-                /* Current values
-                 * Amount of drink sales tested = Drink_List.Count * 25
-                 * Weight change per drink off of 25 = +/- 4
+                /* 
+                 * Current values
+                 * Amount of drink sales tested = Drink_List.Count * 20
+                 * Weight change per drink off of 20 = +/- 5
                  */
                 int longTermSales = _longTermDrinkQueue.Count(d => d.name == drink.name);
-                int longTermWeight = 4 * (longTermSales - longTermCount);
+                double longTermWeight = (100 / longTermCount) * (longTermSales - longTermCount);
 
-                final_weight = shortTermWeight + longTermWeight;
-                
-                int movement_factor = final_weight - drink.previousWeight;
+                final_weight = longTermWeight + shortTermWeight;
+
+                double movement_factor = final_weight - drink.previousWeight;
 
                 drink.previousWeight = final_weight;
 
@@ -75,7 +78,7 @@ namespace Drink_Class_Library
         }
 
         // Moves the drink price based on the movement factor
-        private void MoveDrinkPrice(Drink drink, int movement_factor)
+        private void MoveDrinkPrice(Drink drink, double movement_factor)
         {
             Random rand = new Random();
             double percentMoved = 0;
@@ -89,14 +92,14 @@ namespace Drink_Class_Library
                 // Subject to change
                 double min_movement = movement_factor * .75;
                 // Subject to change
-                double max_movement = movement_factor * 1.5;
+                double max_movement = movement_factor * 1.25;
                 percentMoved = min_movement + (max_movement - min_movement) * rand.NextDouble();
             }
             else if (movement_factor < 0)
             {
                 // Drink price moving down
                 // Subject to change
-                double min_movement = movement_factor * 1.5;
+                double min_movement = movement_factor * 1.25;
                 // Subject to change
                 double max_movement = movement_factor * .75;
                 percentMoved = min_movement + (max_movement - min_movement) * rand.NextDouble();

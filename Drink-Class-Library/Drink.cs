@@ -11,7 +11,7 @@
         public int price_level { get; private set; }
         public bool varies;
 
-        public int previousWeight;
+        public double previousWeight;
 
 
         public Drink(string drink_name, double price)

@@ -94,8 +94,6 @@ namespace UI_WinForms
             buy_drinks(1);
             // Update text information on all drinks
             UpdateDrinkInfo(admin_textbox);
-
-
         }
 
         private void admin_ten_drink_button_Click(object sender, EventArgs e)
@@ -130,19 +128,21 @@ namespace UI_WinForms
         private void UpdateDrinkInfo(TextBox textBox)
         {
             int drink_list_size = drink_list.Count;
-            string[] printed_drinks = new string[drink_list_size + 1];
+            string[] printed_drinks = new string[drink_list_size + 3];
             double total_deviation = 0;
 
             for (int i = 0; i < drink_list_size; i++)
             {
                 Drink drink = drink_list[i];
-                printed_drinks[i] += (i + 1) + ") " + drink.name + "; ";
+                printed_drinks[i] += (i + 1) + ") ";
                 printed_drinks[i] += "Sales: " + drink.sales_count + "; ";
                 printed_drinks[i] += "Original Price: $" + drink.initial_price.ToString("F2") + "; ";
                 printed_drinks[i] += "Current Price: $" + drink.price.ToString("F2") + "; ";
                 total_deviation += drink.price - drink.initial_price;
             }
             printed_drinks[drink_list_size] = "Total deviation between all drinks: " + total_deviation.ToString("F2");
+            printed_drinks[drink_list_size + 1] = "Total sales: " + adminController.drinkController.GetTotalSales().ToString("F2");
+            printed_drinks[drink_list_size + 2] = "Total differentiation: " + adminController.drinkController.GetSalesDifferentiation().ToString("F2");
             textBox.Lines = printed_drinks;
         }
 
@@ -175,7 +175,7 @@ namespace UI_WinForms
             // total_drinks = Count of all drinks in the list
             int total_drinks = drink_list.Count;
             // Chance of current drink index being bought
-            double buy_chance = (1 / total_drinks) * 2;
+            double buy_chance = (1 / (double)total_drinks) * 2;
             // Bool to trigger funciton to stop once a drink index has been chosen
             bool drink_bought = false;
             // Current drink index
@@ -187,7 +187,8 @@ namespace UI_WinForms
                 drink_index = 0;
                 while (drink_bought == false)
                 {
-                    if (rand.NextDouble() < buy_chance)     // Current drink index chosen
+                    double randomNum = rand.NextDouble();
+                    if (randomNum < buy_chance)     // Current drink index chosen
                     {
                         // Buy current drink index
                         drink_bought = true;
@@ -204,6 +205,7 @@ namespace UI_WinForms
                         drink_index++;
                     }
                 }
+                drink_bought = false;
 
             }
 
@@ -217,6 +219,9 @@ namespace UI_WinForms
                 .ToList();  // Convert the result to a new list
         }
 
-        
+        private void DrinkSimulation_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

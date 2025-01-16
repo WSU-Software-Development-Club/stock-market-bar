@@ -12,6 +12,8 @@ namespace Drink_Class_Library
         private SalesService _salesService;
         public DrinkRepository drinkRepository;
 
+        
+
         // List of 50 random names and associated price
         private List<(string, double)> drinksWithPrices = new List<(string, double)>
         {
@@ -68,12 +70,10 @@ namespace Drink_Class_Library
             ("Shirley Temple", 6.50)
         };
 
-        // Basic constructor - needs adjusted
+        // Constructor
         public DrinkController() 
         {
             Console.WriteLine("Project Linked");
-
-            total_sales = 250;
 
             drinkRepository = new DrinkRepository();
             // For Development Purposes only
@@ -93,35 +93,14 @@ namespace Drink_Class_Library
             drinkRepository.GenerateDrinkList(count);
         }
 
-
-        public void AddDrink(string name, double price)
+        public double GetTotalSales()
         {
-            var drink = new Drink(name, price);
-            drinkRepository.AddDrink(drink);
+            return _salesService.GetTotalSalesAmount;
         }
 
-        public void RemoveDrink(string name)
+        public double GetSalesDifferentiation()
         {
-            var drink = drinkRepository.GetDrinkByName(name);
-            if (drink != null)
-            {
-                drinkRepository.RemoveDrink(drink);
-            }
-        }
-
-        public void UpdateDrinkPrice(string name, double newPrice)
-        {
-            drinkRepository.UpdateDrinkPrice(name, newPrice);
-        }
-
-        public List<Drink> GetAllDrinks()
-        {
-            return drinkRepository.GetAllDrinks();
-        }    
-
-        public List<(string, string)> returnDrinkNamesAndPrices()
-        {
-            return drinkRepository.returnDrinkListText();
+            return _salesService.GetAverageSaleDifferentitation;
         }
 
     }

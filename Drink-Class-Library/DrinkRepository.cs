@@ -66,10 +66,8 @@ namespace Drink_Class_Library
             ("Shirley Temple", 6.50)
         };
         private List<Drink> _drinkList;
-        private int _numOfDrinks;
 
-        private int _shortTermCount = 2;
-        private int _longTermCount = 25;
+        
 
         public DrinkRepository()
         {
@@ -98,16 +96,26 @@ namespace Drink_Class_Library
 
         public void AddDrink(Drink drink)
         {
-            _drinkList.Add(drink);
+            if (drink != null)
+            {
+                _drinkList.Add(drink);
+            }
         }
 
         public void RemoveDrink(Drink drink)
         {
-            _drinkList.Remove(drink);
+            if (drink != null)
+            {
+                _drinkList.Remove(drink);
+            }
         }
 
         public void RemoveDrinkAtIndex(int index)
         {
+            if (index < 0 || index >= _drinkList.Count)
+            {
+                return;  // Prevent the exception and exit if the index is out of bounds
+            }
             _drinkList.RemoveAt(index);
         }
 
@@ -125,6 +133,7 @@ namespace Drink_Class_Library
             return null;  // Return null if the index is out of bounds
         }
 
+        // Only called in admin panel
         public void UpdateDrinkPrice(string drinkName, double newPrice)
         {
             Drink? drink = GetDrinkByName(drinkName);
@@ -134,22 +143,13 @@ namespace Drink_Class_Library
             }
         }
 
+        // Only called in admin panel
         public void UpdateDrinkName(string oldName, string newName)
         {
             Drink? drink = GetDrinkByName(oldName);
             if (drink != null)
             {
                 drink.name = newName;
-            }
-        }
-
-        public void UpdateDrink(Drink drink)
-        {
-            var existingDrink = GetDrinkByName(drink.name);
-            if (existingDrink != null)
-            {
-                existingDrink.price = drink.price;
-                existingDrink.sales_count = drink.sales_count;
             }
         }
 
@@ -197,6 +197,5 @@ namespace Drink_Class_Library
             return balancedDrinkList;
         }
 
-        
     }
 }

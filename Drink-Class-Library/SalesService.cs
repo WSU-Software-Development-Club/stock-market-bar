@@ -20,8 +20,15 @@ namespace Drink_Class_Library
         public int GetShortTermCount() => _shortTermCount;
         public Queue<Drink> GetLongTermQueue() => _longTermDrinkQueue;
         // Subject to change
-        private int _longTermCount = 25;
+        private int _longTermCount = 20;
         public int GetLongTermCount() => _longTermCount;
+
+        // Keeps track of how much sales deviate from normal sale amount
+        private double averageSaleDifferentiation;
+        public double GetAverageSaleDifferentitation => averageSaleDifferentiation;
+        // Keeps track of total sales
+        private double total_sales_amount;
+        public double GetTotalSalesAmount => total_sales_amount;
 
         public SalesService(DrinkRepository drinkRepository)
         {
@@ -30,6 +37,46 @@ namespace Drink_Class_Library
             _shortTermDrinkQueue = new Queue<Drink>(_numOfDrinks * _shortTermCount);
             _longTermDrinkQueue = new Queue<Drink>(_numOfDrinks * _longTermCount);
             populateDrinkQueues();
+        }
+
+        // This code will run everytime the drink is bought
+        public void drink_bought(string drink_name, int total_sales)
+        {
+
+            var drink = _drinkRepository.GetDrinkByName(drink_name);
+            if (drink == null) throw new Exception("Drink not found.");
+
+            drink.sales_count++;
+            this.RecordSale(drink.price, drink.initial_price);
+
+            if (_shortTermDrinkQueue.Count >= _numOfDrinks * _shortTermCount)
+            {
+                _shortTermDrinkQueue.Dequeue();
+            }
+            if (_longTermDrinkQueue.Count >= _numOfDrinks * _longTermCount)
+            {
+                _longTermDrinkQueue.Dequeue();
+            }
+
+            _shortTermDrinkQueue.Enqueue(drink);
+            _longTermDrinkQueue.Enqueue(drink);
+
+            if (total_sales % 10 == 0)
+            {
+                // Run drink algorithm (runs automatically in constructor)
+                DrinkAlgorithm drinkAlgorithm = new DrinkAlgorithm(this._drinkRepository, this);
+            }
+
+            return;
+
+        }
+
+        // Function to help keep track of sales in salesService
+        private void RecordSale(double drink_price, double original_price)
+        {
+            double price_difference = drink_price - original_price;
+            averageSaleDifferentiation += price_difference;
+            total_sales_amount += drink_price;
         }
 
         private void populateDrinkQueues()
@@ -57,35 +104,6 @@ namespace Drink_Class_Library
 
         }
 
-        // This code will run everytime the drink is bought
-        public void drink_bought(string drink_name, int total_sales)
-        {
-
-            var drink = _drinkRepository.GetDrinkByName(drink_name);
-            if (drink == null) throw new Exception("Drink not found.");
-
-            drink.sales_count++;
-
-            if (_shortTermDrinkQueue.Count >= _numOfDrinks * _shortTermCount)
-            {
-                _shortTermDrinkQueue.Dequeue();
-            }
-            if (_longTermDrinkQueue.Count >= _numOfDrinks * _longTermCount)
-            {
-                _longTermDrinkQueue.Dequeue();
-            }
-
-            _shortTermDrinkQueue.Enqueue(drink);
-            _longTermDrinkQueue.Enqueue(drink);
-
-            if (total_sales % 10 == 0)
-            {
-                // Run drink algorithm (runs automatically in constructor)
-                DrinkAlgorithm drinkAlgorithm = new DrinkAlgorithm(this._drinkRepository, this);
-            }
-
-            return;
-
-        }
+        
     }
 }
